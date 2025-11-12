@@ -1,0 +1,2389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mamboleo Insights - Demystifying Daily Life</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-navy: #1a237e;
+            --accent-green: #2e7d32;
+            --light-gray: #f5f5f5;
+            --dark-gray: #333;
+            --white: #ffffff;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+            --portal-blue: #1565c0;
+            --portal-purple: #6a1b9a;
+            --portal-orange: #ef6c00;
+            --portal-teal: #00695c;
+            --portal-pink: #ad1457;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--dark-gray);
+            background-color: var(--white);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Poppins', sans-serif;
+            margin-bottom: 1rem;
+            color: var(--primary-navy);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--accent-green);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #1b5e20;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--accent-green);
+            color: var(--accent-green);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--accent-green);
+            color: var(--white);
+        }
+
+        /* Page Management */
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-navy);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo span {
+            color: var(--accent-green);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-gray);
+            font-weight: 500;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-green);
+        }
+
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-navy) 0%, #283593 100%);
+            color: var(--white);
+            padding: 150px 0 100px;
+            text-align: center;
+            margin-top: 70px;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            color: var(--white);
+            margin-bottom: 1rem;
+        }
+
+        .hero .subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .rotating-text {
+            height: 60px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .rotating-text span {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: 300;
+            animation: rotateText 9s infinite;
+        }
+
+        @keyframes rotateText {
+            0%, 25% { transform: translateY(0); }
+            33%, 58% { transform: translateY(-60px); }
+            66%, 91% { transform: translateY(-120px); }
+            100% { transform: translateY(0); }
+        }
+
+        /* Featured Guides */
+        .featured-guides {
+            padding: 80px 0;
+            background-color: var(--light-gray);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            color: #666;
+        }
+
+        .guides-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .guide-card {
+            background: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .guide-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .card-category {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--accent-green);
+            color: var(--white);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .card-content h3 {
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+        }
+
+        .card-content p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #999;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .read-more {
+            color: var(--accent-green);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .read-more:hover {
+            text-decoration: underline;
+        }
+
+        /* Tabs Section */
+        .tabs-section {
+            padding: 80px 0;
+        }
+
+        .tabs-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .tabs-header {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 2rem;
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            padding: 1rem 2rem;
+            background: none;
+            border: none;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .tab-btn.active {
+            color: var(--accent-green);
+            border-bottom: 3px solid var(--accent-green);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .resource-card {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .resource-card i {
+            font-size: 2.5rem;
+            color: var(--accent-green);
+            margin-bottom: 1rem;
+        }
+
+        /* Categories */
+        .categories {
+            padding: 80px 0;
+            background-color: var(--light-gray);
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .category-card {
+            text-align: center;
+            padding: 2rem;
+            background: var(--white);
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .category-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--accent-green);
+        }
+
+        /* About Section */
+        .about {
+            padding: 80px 0;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-image {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .principles {
+            margin-top: 2rem;
+        }
+
+        .principle {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .principle i {
+            color: var(--accent-green);
+            font-size: 1.2rem;
+            margin-top: 0.2rem;
+        }
+
+        /* Services & Reservation */
+        .services {
+            padding: 80px 0;
+            background-color: var(--light-gray);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .service-card {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .service-card i {
+            font-size: 3rem;
+            color: var(--accent-green);
+            margin-bottom: 1.5rem;
+        }
+
+        .service-card h3 {
+            margin-bottom: 1rem;
+        }
+
+        .service-card .price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-navy);
+            margin: 1rem 0;
+        }
+
+        .reservation-form {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        /* Newsletter */
+        .newsletter {
+            background: linear-gradient(135deg, var(--accent-green) 0%, #4caf50 100%);
+            color: var(--white);
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .newsletter h2 {
+            color: var(--white);
+        }
+
+        .newsletter-form {
+            max-width: 500px;
+            margin: 2rem auto 0;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-navy);
+            color: var(--white);
+            padding: 50px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: var(--white);
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+        }
+
+        .contact-info {
+            color: #ccc;
+        }
+
+        .contact-info p {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: var(--white);
+            text-decoration: none;
+            padding: 8px 12px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #ccc;
+        }
+
+        /* More Page Styles */
+        .more-hero {
+            background: linear-gradient(135deg, var(--accent-green) 0%, #2e7d32 100%);
+            color: var(--white);
+            padding: 150px 0 80px;
+            text-align: center;
+            margin-top: 70px;
+        }
+
+        .more-hero h1 {
+            color: var(--white);
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .blog-card {
+            background: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .blog-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .blog-content {
+            padding: 1.5rem;
+        }
+
+        .blog-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #999;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .blog-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .blog-tag {
+            background: var(--light-gray);
+            color: var(--dark-gray);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        /* Portal Tabs Section */
+        .portals-section {
+            padding: 80px 0;
+            background-color: var(--light-gray);
+        }
+
+        .portal-tabs-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .portal-tabs-header {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 2rem;
+            overflow-x: auto;
+        }
+
+        .portal-tab-btn {
+            padding: 1rem 2rem;
+            background: none;
+            border: none;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            flex: 1;
+            text-align: center;
+        }
+
+        .portal-tab-btn.active {
+            border-bottom: 3px solid;
+        }
+
+        .portal-tab-btn:nth-child(1) {
+            color: var(--portal-blue);
+        }
+        .portal-tab-btn:nth-child(1).active {
+            border-color: var(--portal-blue);
+        }
+
+        .portal-tab-btn:nth-child(2) {
+            color: var(--portal-purple);
+        }
+        .portal-tab-btn:nth-child(2).active {
+            border-color: var(--portal-purple);
+        }
+
+        .portal-tab-btn:nth-child(3) {
+            color: var(--portal-orange);
+        }
+        .portal-tab-btn:nth-child(3).active {
+            border-color: var(--portal-orange);
+        }
+
+        .portal-tab-btn:nth-child(4) {
+            color: var(--portal-teal);
+        }
+        .portal-tab-btn:nth-child(4).active {
+            border-color: var(--portal-teal);
+        }
+
+        .portal-tab-btn:nth-child(5) {
+            color: var(--portal-pink);
+        }
+        .portal-tab-btn:nth-child(5).active {
+            border-color: var(--portal-pink);
+        }
+
+        .portal-tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .portal-tab-content.active {
+            display: block;
+        }
+
+        .portal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .portal-card {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+
+        .portal-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .portal-card i {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .portal-card:nth-child(1) i {
+            color: var(--portal-blue);
+        }
+
+        .portal-card:nth-child(2) i {
+            color: var(--portal-purple);
+        }
+
+        .portal-card:nth-child(3) i {
+            color: var(--portal-orange);
+        }
+
+        .portal-card:nth-child(4) i {
+            color: var(--portal-teal);
+        }
+
+        .portal-card:nth-child(5) i {
+            color: var(--portal-pink);
+        }
+
+        .portal-stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .portal-features {
+            margin-top: 2rem;
+            text-align: left;
+        }
+
+        .portal-features ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .portal-features li {
+            margin-bottom: 0.8rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .portal-features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--accent-green);
+            font-weight: bold;
+        }
+
+        /* Detailed Content Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            z-index: 2000;
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            background-color: var(--white);
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 800px;
+            position: relative;
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .close-modal:hover {
+            color: var(--dark-gray);
+        }
+
+        .modal-header {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .modal-body {
+            line-height: 1.8;
+        }
+
+        .modal-image {
+            width: 100%;
+            height: 300px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Page-specific styles */
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-navy) 0%, #283593 100%);
+            color: var(--white);
+            padding: 150px 0 80px;
+            text-align: center;
+            margin-top: 70px;
+        }
+
+        .page-hero h1 {
+            color: var(--white);
+        }
+
+        .page-content {
+            padding: 80px 0;
+        }
+
+        .contact-form {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--white);
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: var(--shadow);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .rotating-text span {
+                font-size: 1.2rem;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            .guides-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .tabs-header {
+                flex-wrap: wrap;
+            }
+
+            .tab-btn {
+                flex: 1;
+                min-width: 120px;
+                text-align: center;
+            }
+
+            .portal-tabs-header {
+                flex-direction: column;
+            }
+
+            .portal-tab-btn {
+                flex: none;
+                text-align: left;
+            }
+
+            .portal-stats {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a class="logo" onclick="showPage('home')">
+                    <i class="fas fa-seedling"></i>
+                    Mamboleo<span>Insights</span>
+                </a>
+                <ul class="nav-links">
+                    <li><a onclick="showPage('home')">Home</a></li>
+                    <li><a onclick="showPage('guides')">Guides</a></li>
+                    <li><a onclick="showPage('resources')">Resources</a></li>
+                    <li><a onclick="showPage('services')">Services</a></li>
+                    <li><a onclick="showPage('more')">More</a></li>
+                    <li><a onclick="showPage('contact')">Contact</a></li>
+                </ul>
+                <div class="mobile-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Home Page -->
+    <div id="home" class="page active">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <h1>Stop Guessing. Start Knowing.</h1>
+                <p class="subtitle">Demystifying Daily Life. Making You an Informed East African.</p>
+                <div class="rotating-text">
+                    <span>The best savings account for young Kenyans</span>
+                    <span>How to decode your first employment contract</span>
+                    <span>Honest review of Nairobi's co-working spaces</span>
+                </div>
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <a onclick="showPage('guides')" class="btn">Explore Our Guides</a>
+                    <a onclick="showPage('services')" class="btn btn-outline">Book a Consultation</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Guides -->
+        <section class="featured-guides">
+            <div class="container">
+                <h2 class="section-title">Featured Guides</h2>
+                <p class="section-subtitle">Our most popular, in-depth guides to help you make informed decisions about your finances, career, and lifestyle in East Africa.</p>
+                <div class="guides-grid">
+                    <div class="guide-card">
+                        <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80');">
+                            <div class="card-category">Save & Grow</div>
+                        </div>
+                        <div class="card-content">
+                            <h3>Best High-Interest Savings Accounts in Kenya 2024</h3>
+                            <p>Compare the top savings accounts from banks and SACCOs to maximize your returns. We've analyzed interest rates, fees, and accessibility.</p>
+                            <div class="card-meta">
+                                <span><i class="far fa-clock"></i> 15 min read</span>
+                                <span><i class="far fa-calendar"></i> March 15, 2024</span>
+                            </div>
+                            <a class="read-more" onclick="openModal('savings-modal')">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="guide-card">
+                        <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1586281380349-632531db7ed4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80');">
+                            <div class="card-category">Work & Thrive</div>
+                        </div>
+                        <div class="card-content">
+                            <h3>Salary Negotiation Guide for Kenyan Professionals</h3>
+                            <p>Learn how to confidently negotiate your worth in the East African job market. Practical tips and scripts for your next salary discussion.</p>
+                            <div class="card-meta">
+                                <span><i class="far fa-clock"></i> 12 min read</span>
+                                <span><i class="far fa-calendar"></i> March 10, 2024</span>
+                            </div>
+                            <a class="read-more" onclick="openModal('salary-modal')">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    <div class="guide-card">
+                        <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80');">
+                            <div class="card-category">Tech & Connect</div>
+                        </div>
+                        <div class="card-content">
+                            <h3>Best Budget Smartphones Under KES 20,000</h3>
+                            <p>Our hands-on review of the best value smartphones available in Kenya today. Performance, camera quality, and battery life compared.</p>
+                            <div class="card-meta">
+                                <span><i class="far fa-clock"></i> 10 min read</span>
+                                <span><i class="far fa-calendar"></i> March 5, 2024</span>
+                            </div>
+                            <a class="read-more" onclick="openModal('smartphone-modal')">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align: center;">
+                    <a onclick="showPage('guides')" class="btn">View All Guides</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Portal Tabs Section -->
+        <section class="portals-section">
+            <div class="container">
+                <h2 class="section-title">Our Community Portals</h2>
+                <p class="section-subtitle">Access specialized resources and connect with our growing community through our dedicated portals.</p>
+                
+                <div class="portal-tabs-container">
+                    <div class="portal-tabs-header">
+                        <button class="portal-tab-btn active" data-portal="clients">Clients Portal</button>
+                        <button class="portal-tab-btn" data-portal="admins">Admins Portal</button>
+                        <button class="portal-tab-btn" data-portal="career">Career Portal</button>
+                        <button class="portal-tab-btn" data-portal="donations">Donations</button>
+                        <button class="portal-tab-btn" data-portal="impact">People We've Helped</button>
+                    </div>
+                    
+                    <!-- Clients Portal -->
+                    <div id="clients-portal" class="portal-tab-content active">
+                        <div class="portal-grid">
+                            <div class="portal-card">
+                                <i class="fas fa-user-circle"></i>
+                                <h3>Client Dashboard</h3>
+                                <p>Access your personalized dashboard with progress tracking, saved resources, and personalized recommendations.</p>
+                                <a href="#" class="btn" style="margin-top: 1rem;">Access Dashboard</a>
+                            </div>
+                            <div class="portal-card">
+                                <i class="fas fa-book-open"></i>
+                                <h3>Resource Library</h3>
+                                <p>Browse our extensive library of guides, templates, and tools tailored to your specific needs and goals.</p>
+                                <a href="#" class="btn" style="margin-top: 1rem;">Explore Resources</a>
+                            </div>
+                            <div class="portal-card">
+                                <i class="fas fa-comments"></i>
+                                <h3>Support Center</h3>
+                                <p>Get answers to your questions through our knowledge base or connect with our support team directly.</p>
+                                <a href="#" class="btn" style="margin-top: 1rem;">Get Support</a>
+                            </div>
+                        </div>
+                        
+                        <div class="portal-stats">
+                            <div class="stat-item">
+                                <div class="stat-number">15,000+</div>
+                                <div class="stat-label">Active Clients</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">94%</div>
+                                <div class="stat-label">Satisfaction Rate</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">48hrs</div>
+                                <div class="stat-label">Avg. Response Time</div>
+                            </div>
+                        </div>
+                        
+                        <div class="portal-features">
+                            <h3>What You'll Find in Our Clients Portal:</h3>
+                            <ul>
+                                <li>Personalized financial health assessments</li>
+                                <li>Customized savings and investment plans</li>
+                                <li>Progress tracking with milestone celebrations</li>
+                                <li>Exclusive webinars and workshops</li>
+                                <li>Community forums for peer support</li>
+                                <li>Priority access to new resources</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Admins Portal -->
+                    <div id="admins-portal" class="portal-tab-content">
+                        <div class="portal-grid">
+                            <div class="portal-card">
+                                <i class="fas fa-cogs"></i>
+                                <h3>Admin Dashboard</h3>
+                                <p>Manage users, content, and analytics through our comprehensive admin interface with role-based permissions.</p>
+                                <a href="#" class="btn" style="margin-top: 1rem;">Admin Panel</a>
+                            </div>
+                            <div class="portal-card">
+                                <i class="fas fa-chart-bar"></i>
+                                <h3>Analytics Hub</h3>
+                                <p>Access detailed reports on user engagement, content performance, and platform usage metrics.</p>
+                                <a href="#" class="btn" style="margin-top: 1rem;">View Analytics</a>
+                            </div>
+                            <div class="portal-card">
+                                <i class="fas fa-users-cog"></i>
+                                <h3>Team Management</h3>
+                                <p>Coordinate with your team members, assign tasks, and track progress on various initiatives.</p>
+                                <a href="#" class="btn" style="margin-top: 1rem;">Manage Team</a>
+                            </div>
+                        </div>
+                        
+                        <div class="portal-stats">
+                            <div class="stat-item">
+                                <div class="stat-number">250+</div>
+                                <div class="stat-label">Content Pieces</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">85%</div>
+                                <div class="stat-label">User Engagement</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">12</div>
+                                <div class="stat-label">Team Members</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Career Portal -->
+                    <div id="career-portal" class="portal-tab-content">
+                        <div class="portal-grid">
+                            <div class="portal-card">
+                                <i class="fas fa-briefcase"></i>
+                                <h3>Job Board</h3>
+                                <p>Browse curated job opportunities from top employers in Kenya and across East Africa.</p>
+                                <a href="#" class="btn" style="margin-top: 1rem;">View Jobs</a>
+                            </div>
+                            <div class="portal-card">
+                                <i class="fas fa-file-alt"></i>
+                                <h3>CV Builder</h3>
+                                <p>Create professional CVs and cover letters with our easy-to-use templates and expert guidance.</p>
+                                <a href="#" class="btn" style="margin-top: 1rem;">Build CV</a>
+                            </div>
+                            <div class="portal-card">
+                                <i class="fas fa-graduation-cap"></i>
+                                <h3>Skill Development</h3>
+                                <p>Access courses, workshops, and resources to enhance your professional skills and marketability.</p>
+                                <a href="#" class="btn" style="margin-top: 1rem;">Learn Skills</a>
+                            </div>
+                        </div>
+                        
+                        <div class="portal-stats">
+                            <div class="stat-item">
+                                <div class="stat-number">2,500+</div>
+                                <div class="stat-label">Job Listings</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">78%</div>
+                                <div class="stat-label">Success Rate</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">35</div>
+                                <div class="stat-label">Partner Companies</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Donations Portal -->
+                    <div id="donations-portal" class="portal-tab-content">
+                        <div class="portal-grid">
+                            <div class="portal-card">
+                                <i class="fas fa-hand-holding-heart"></i>
+                                <h3>Make a Donation</h3>
+                                <p>Support our mission to provide free financial literacy resources to underserved communities across East Africa.</p>
+                                <a href="#" class="btn" style="margin-top: 1rem;">Donate Now</a>
+                            </div>
+                            <div class="portal-card">
+                                <i class="fas fa-chart-pie"></i>
+                                <h3>Impact Reports</h3>
+                                <p>See how your contributions are making a difference through our transparent impact reporting.</p>
+                                <a href="#" class="btn" style="margin-top: 1rem;">View Impact</a>
+                            </div>
+                            <div class="portal-card">
+                                <i class="fas fa-hands-helping"></i>
+                                <h3>Become a Partner</h3>
+                                <p>Explore corporate partnership opportunities to amplify our impact and reach more communities.</p>
+                                <a href="#" class="btn" style="margin-top: 1rem;">Partner With Us</a>
+                            </div>
+                        </div>
+                        
+                        <div class="portal-stats">
+                            <div class="stat-item">
+                                <div class="stat-number">KES 5.2M</div>
+                                <div class="stat-label">Raised in 2024</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">12,500</div>
+                                <div class="stat-label">People Reached</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">92%</div>
+                                <div class="stat-label">Direct to Programs</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Impact Portal -->
+                    <div id="impact-portal" class="portal-tab-content">
+                        <div class="portal-grid">
+                            <div class="portal-card">
+                                <i class="fas fa-user-friends"></i>
+                                <h3>Success Stories</h3>
+                                <p>Read inspiring stories from individuals and families whose lives have been transformed through our programs.</p>
+                                <a href="#" class="btn" style="margin-top: 1rem;">Read Stories</a>
+                            </div>
+                            <div class="portal-card">
+                                <i class="fas fa-chart-line"></i>
+                                <h3>Impact Metrics</h3>
+                                <p>Explore data and statistics showcasing the tangible impact of our work across various communities.</p>
+                                <a href="#" class="btn" style="margin-top: 1rem;">View Metrics</a>
+                            </div>
+                            <div class="portal-card">
+                                <i class="fas fa-map-marked-alt"></i>
+                                <h3>Community Reach</h3>
+                                <p>See where we're making a difference across Kenya and East Africa through our interactive map.</p>
+                                <a href="#" class="btn" style="margin-top: 1rem;">Explore Map</a>
+                            </div>
+                        </div>
+                        
+                        <div class="portal-stats">
+                            <div class="stat-item">
+                                <div class="stat-number">45,000+</div>
+                                <div class="stat-label">Lives Impacted</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">87%</div>
+                                <div class="stat-label">Financial Improvement</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">24</div>
+                                <div class="stat-label">Counties Reached</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Categories -->
+        <section class="categories">
+            <div class="container">
+                <h2 class="section-title">Explore Our Pillars</h2>
+                <p class="section-subtitle">Navigate our content through these four key areas that cover the most important aspects of your financial and professional life.</p>
+                <div class="categories-grid">
+                    <div class="category-card">
+                        <div class="category-icon"><i class="fas fa-piggy-bank"></i></div>
+                        <h3>SAVE & GROW</h3>
+                        <p>Smart money management, investing, and wealth-building strategies for East Africans.</p>
+                        <a onclick="showPage('guides')" class="btn" style="margin-top: 1rem;">Explore</a>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-icon"><i class="fas fa-briefcase"></i></div>
+                        <h3>WORK & THRIVE</h3>
+                        <p>Career development, workplace rights, and professional growth in the Kenyan market.</p>
+                        <a onclick="showPage('guides')" class="btn" style="margin-top: 1rem;">Explore</a>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-icon"><i class="fas fa-mobile-alt"></i></div>
+                        <h3>TECH & CONNECT</h3>
+                        <p>Technology reviews, internet solutions, and digital tools tailored for East Africa.</p>
+                        <a onclick="showPage('guides')" class="btn" style="margin-top: 1rem;">Explore</a>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-icon"><i class="fas fa-home"></i></div>
+                        <h3>LIVE SMART</h3>
+                        <p>Lifestyle, housing, health insurance, and sustainable living in urban Kenya.</p>
+                        <a onclick="showPage('guides')" class="btn" style="margin-top: 1rem;">Explore</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter -->
+        <section class="newsletter">
+            <div class="container">
+                <h2>The Mamboleo Brief</h2>
+                <p>Get our weekly email with the most important insights and guides delivered to your inbox.</p>
+                <form class="newsletter-form">
+                    <input type="email" class="newsletter-input" placeholder="Enter your email address" required>
+                    <button type="submit" class="btn">Subscribe</button>
+                </form>
+            </div>
+        </section>
+    </div>
+
+    <!-- Guides Page -->
+    <div id="guides" class="page">
+        <section class="page-hero">
+            <div class="container">
+                <h1>Comprehensive Guides</h1>
+                <p class="subtitle">In-depth resources to help you navigate financial, career, and lifestyle decisions in East Africa</p>
+            </div>
+        </section>
+
+        <section class="page-content">
+            <div class="container">
+                <h2 class="section-title">Browse Our Guides by Category</h2>
+                <p class="section-subtitle">Select a category to explore our comprehensive guides tailored to East African professionals and families.</p>
+                
+                <div class="tabs-container">
+                    <div class="tabs-header">
+                        <button class="tab-btn active" data-tab="finance">Finance & Investment</button>
+                        <button class="tab-btn" data-tab="career">Career Development</button>
+                        <button class="tab-btn" data-tab="tech">Technology</button>
+                        <button class="tab-btn" data-tab="lifestyle">Lifestyle</button>
+                    </div>
+                    
+                    <!-- Finance & Investment Tab -->
+                    <div id="finance" class="tab-content active">
+                        <div class="guides-grid">
+                            <div class="guide-card">
+                                <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80');">
+                                    <div class="card-category">Save & Grow</div>
+                                </div>
+                                <div class="card-content">
+                                    <h3>Best High-Interest Savings Accounts in Kenya 2024</h3>
+                                    <p>Compare the top savings accounts from banks and SACCOs to maximize your returns.</p>
+                                    <div class="card-meta">
+                                        <span><i class="far fa-clock"></i> 15 min read</span>
+                                        <span><i class="far fa-calendar"></i> March 15, 2024</span>
+                                    </div>
+                                    <a class="read-more" onclick="openModal('savings-modal')">Read More <i class="fas fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                            <div class="guide-card">
+                                <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80');">
+                                    <div class="card-category">Save & Grow</div>
+                                </div>
+                                <div class="card-content">
+                                    <h3>Understanding SACCO Investments in Kenya</h3>
+                                    <p>A complete guide to SACCO membership, benefits, and how to maximize your returns.</p>
+                                    <div class="card-meta">
+                                        <span><i class="far fa-clock"></i> 18 min read</span>
+                                        <span><i class="far fa-calendar"></i> March 8, 2024</span>
+                                    </div>
+                                    <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                            <div class="guide-card">
+                                <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80');">
+                                    <div class="card-category">Save & Grow</div>
+                                </div>
+                                <div class="card-content">
+                                    <h3>Agricultural Investment Opportunities in Kenya</h3>
+                                    <p>Exploring profitable farming ventures and agribusiness opportunities for urban investors.</p>
+                                    <div class="card-meta">
+                                        <span><i class="far fa-clock"></i> 22 min read</span>
+                                        <span><i class="far fa-calendar"></i> February 28, 2024</span>
+                                    </div>
+                                    <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Career Development Tab -->
+                    <div id="career" class="tab-content">
+                        <div class="guides-grid">
+                            <div class="guide-card">
+                                <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1586281380349-632531db7ed4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80');">
+                                    <div class="card-category">Work & Thrive</div>
+                                </div>
+                                <div class="card-content">
+                                    <h3>Salary Negotiation Guide for Kenyan Professionals</h3>
+                                    <p>Learn how to confidently negotiate your worth in the East African job market.</p>
+                                    <div class="card-meta">
+                                        <span><i class="far fa-clock"></i> 12 min read</span>
+                                        <span><i class="far fa-calendar"></i> March 10, 2024</span>
+                                    </div>
+                                    <a class="read-more" onclick="openModal('salary-modal')">Read More <i class="fas fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                            <div class="guide-card">
+                                <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1551836026-d5cbcac34f59?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80');">
+                                    <div class="card-category">Work & Thrive</div>
+                                </div>
+                                <div class="card-content">
+                                    <h3>Remote Work Opportunities for Kenyans</h3>
+                                    <p>How to find, apply for, and succeed in remote positions with international companies.</p>
+                                    <div class="card-meta">
+                                        <span><i class="far fa-clock"></i> 14 min read</span>
+                                        <span><i class="far fa-calendar"></i> March 3, 2024</span>
+                                    </div>
+                                    <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                            <div class="guide-card">
+                                <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80');">
+                                    <div class="card-category">Work & Thrive</div>
+                                </div>
+                                <div class="card-content">
+                                    <h3>Building a Professional Network in Kenya</h3>
+                                    <p>Strategies for creating meaningful professional connections that advance your career.</p>
+                                    <div class="card-meta">
+                                        <span><i class="far fa-clock"></i> 11 min read</span>
+                                        <span><i class="far fa-calendar"></i> February 25, 2024</span>
+                                    </div>
+                                    <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Technology Tab -->
+                    <div id="tech" class="tab-content">
+                        <div class="guides-grid">
+                            <div class="guide-card">
+                                <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80');">
+                                    <div class="card-category">Tech & Connect</div>
+                                </div>
+                                <div class="card-content">
+                                    <h3>Best Budget Smartphones Under KES 20,000</h3>
+                                    <p>Our hands-on review of the best value smartphones available in Kenya today.</p>
+                                    <div class="card-meta">
+                                        <span><i class="far fa-clock"></i> 10 min read</span>
+                                        <span><i class="far fa-calendar"></i> March 5, 2024</span>
+                                    </div>
+                                    <a class="read-more" onclick="openModal('smartphone-modal')">Read More <i class="fas fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                            <div class="guide-card">
+                                <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80');">
+                                    <div class="card-category">Tech & Connect</div>
+                                </div>
+                                <div class="card-content">
+                                    <h3>Internet Solutions for Rural Kenya</h3>
+                                    <p>Comparing satellite, wireless, and mobile internet options for areas with limited connectivity.</p>
+                                    <div class="card-meta">
+                                        <span><i class="far fa-clock"></i> 16 min read</span>
+                                        <span><i class="far fa-calendar"></i> February 20, 2024</span>
+                                    </div>
+                                    <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                            <div class="guide-card">
+                                <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80');">
+                                    <div class="card-category">Tech & Connect</div>
+                                </div>
+                                <div class="card-content">
+                                    <h3>Digital Security for Kenyan Businesses</h3>
+                                    <p>Essential cybersecurity practices to protect your business from online threats.</p>
+                                    <div class="card-meta">
+                                        <span><i class="far fa-clock"></i> 19 min read</span>
+                                        <span><i class="far fa-calendar"></i> February 15, 2024</span>
+                                    </div>
+                                    <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Lifestyle Tab -->
+                    <div id="lifestyle" class="tab-content">
+                        <div class="guides-grid">
+                            <div class="guide-card">
+                                <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80');">
+                                    <div class="card-category">Live Smart</div>
+                                </div>
+                                <div class="card-content">
+                                    <h3>Affordable Housing Options in Nairobi</h3>
+                                    <p>Exploring different neighborhoods and housing types for various budgets.</p>
+                                    <div class="card-meta">
+                                        <span><i class="far fa-clock"></i> 13 min read</span>
+                                        <span><i class="far fa-calendar"></i> March 1, 2024</span>
+                                    </div>
+                                    <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                            <div class="guide-card">
+                                <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80');">
+                                    <div class="card-category">Live Smart</div>
+                                </div>
+                                <div class="card-content">
+                                    <h3>Health Insurance Comparison in Kenya</h3>
+                                    <p>Detailed analysis of NHIF and private insurance options for individuals and families.</p>
+                                    <div class="card-meta">
+                                        <span><i class="far fa-clock"></i> 17 min read</span>
+                                        <span><i class="far fa-calendar"></i> February 22, 2024</span>
+                                    </div>
+                                    <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                            <div class="guide-card">
+                                <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80');">
+                                    <div class="card-category">Live Smart</div>
+                                </div>
+                                <div class="card-content">
+                                    <h3>Sustainable Living Practices for Urban Kenyans</h3>
+                                    <p>Practical tips for reducing your environmental impact while saving money.</p>
+                                    <div class="card-meta">
+                                        <span><i class="far fa-clock"></i> 14 min read</span>
+                                        <span><i class="far fa-calendar"></i> February 18, 2024</span>
+                                    </div>
+                                    <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Resources Page -->
+    <div id="resources" class="page">
+        <section class="page-hero">
+            <div class="container">
+                <h1>Resources & Tools</h1>
+                <p class="subtitle">Downloadable templates, calculators, and tools to help you implement our advice</p>
+            </div>
+        </section>
+
+        <section class="page-content">
+            <div class="container">
+                <h2 class="section-title">Free Resources for East Africans</h2>
+                <p class="section-subtitle">Access our collection of templates, calculators, and planning tools designed specifically for the Kenyan context.</p>
+                
+                <div class="tab-grid">
+                    <div class="resource-card">
+                        <i class="fas fa-file-invoice-dollar"></i>
+                        <h3>Budget Templates</h3>
+                        <p>Download our monthly budget templates tailored for Kenyan incomes and expenses.</p>
+                        <a href="#" class="btn" style="margin-top: 1rem;">Download</a>
+                    </div>
+                    <div class="resource-card">
+                        <i class="fas fa-calculator"></i>
+                        <h3>Investment Calculators</h3>
+                        <p>Calculate potential returns on various investment options available in Kenya.</p>
+                        <a href="#" class="btn" style="margin-top: 1rem;">Access Tool</a>
+                    </div>
+                    <div class="resource-card">
+                        <i class="fas fa-file-contract"></i>
+                        <h3>Contract Templates</h3>
+                        <p>Legal templates for rental agreements, freelance work, and small business contracts.</p>
+                        <a href="#" class="btn" style="margin-top: 1rem;">Download</a>
+                    </div>
+                    <div class="resource-card">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Financial Planning Worksheets</h3>
+                        <p>Step-by-step worksheets to plan your financial goals and track your progress.</p>
+                        <a href="#" class="btn" style="margin-top: 1rem;">Download</a>
+                    </div>
+                    <div class="resource-card">
+                        <i class="fas fa-home"></i>
+                        <h3>Mortgage Calculator</h3>
+                        <p>Calculate monthly payments for different mortgage options from Kenyan banks.</p>
+                        <a href="#" class="btn" style="margin-top: 1rem;">Access Tool</a>
+                    </div>
+                    <div class="resource-card">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h3>Career Development Plan</h3>
+                        <p>Template to map out your career goals and the steps needed to achieve them.</p>
+                        <a href="#" class="btn" style="margin-top: 1rem;">Download</a>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 3rem;">
+                    <h3>Looking for something specific?</h3>
+                    <p>Contact us if you need a custom resource or have suggestions for new tools.</p>
+                    <a onclick="showPage('contact')" class="btn" style="margin-top: 1rem;">Contact Us</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Services Page -->
+    <div id="services" class="page">
+        <section class="page-hero">
+            <div class="container">
+                <h1>Our Services</h1>
+                <p class="subtitle">Personalized consultations and services to help you achieve your financial and career goals</p>
+            </div>
+        </section>
+
+        <section class="services">
+            <div class="container">
+                <h2 class="section-title">Professional Services</h2>
+                <p class="section-subtitle">Get personalized guidance from our team of financial and career experts.</p>
+                
+                <div class="services-grid">
+                    <div class="service-card">
+                        <i class="fas fa-coins"></i>
+                        <h3>Financial Planning Session</h3>
+                        <p>One-hour consultation to review your financial situation and create a personalized plan.</p>
+                        <div class="price">KES 2,500</div>
+                        <a href="#" class="btn">Book Session</a>
+                    </div>
+                    <div class="service-card">
+                        <i class="fas fa-briefcase"></i>
+                        <h3>Career Strategy Consultation</h3>
+                        <p>Get expert advice on advancing your career, negotiating salaries, or changing industries.</p>
+                        <div class="price">KES 3,000</div>
+                        <a href="#" class="btn">Book Session</a>
+                    </div>
+                    <div class="service-card">
+                        <i class="fas fa-file-alt"></i>
+                        <h3>CV & Cover Letter Review</h3>
+                        <p>Professional review and optimization of your CV and cover letter for the Kenyan job market.</p>
+                        <div class="price">KES 1,500</div>
+                        <a href="#" class="btn">Book Service</a>
+                    </div>
+                    <div class="service-card">
+                        <i class="fas fa-chart-pie"></i>
+                        <h3>Investment Portfolio Review</h3>
+                        <p>Comprehensive analysis of your current investments and recommendations for optimization.</p>
+                        <div class="price">KES 4,000</div>
+                        <a href="#" class="btn">Book Review</a>
+                    </div>
+                    <div class="service-card">
+                        <i class="fas fa-user-tie"></i>
+                        <h3>Interview Preparation</h3>
+                        <p>Mock interview session with feedback tailored to specific roles and companies in Kenya.</p>
+                        <div class="price">KES 2,500</div>
+                        <a href="#" class="btn">Book Session</a>
+                    </div>
+                    <div class="service-card">
+                        <i class="fas fa-home"></i>
+                        <h3>Home Buying Consultation</h3>
+                        <p>Guidance through the home buying process in Kenya, from search to closing.</p>
+                        <div class="price">KES 5,000</div>
+                        <a href="#" class="btn">Book Consultation</a>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 3rem;">
+                    <h3>Package Deals</h3>
+                    <p>Save money with our bundled service packages designed for comprehensive support.</p>
+                    <a href="#" class="btn btn-outline">View Packages</a>
+                </div>
+            </div>
+        </section>
+        
+        <section class="services" style="background-color: var(--white);">
+            <div class="container">
+                <h2 class="section-title">Book a Consultation</h2>
+                <p class="section-subtitle">Fill out the form below and we'll contact you to schedule your session.</p>
+                
+                <div class="reservation-form">
+                    <form id="consultation-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name">Full Name</label>
+                                <input type="text" id="name" name="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" id="phone" name="phone" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="service">Service Interested In</label>
+                                <select id="service" name="service" required>
+                                    <option value="">Select a service</option>
+                                    <option value="financial-planning">Financial Planning Session</option>
+                                    <option value="career-consultation">Career Strategy Consultation</option>
+                                    <option value="cv-review">CV & Cover Letter Review</option>
+                                    <option value="investment-review">Investment Portfolio Review</option>
+                                    <option value="interview-prep">Interview Preparation</option>
+                                    <option value="home-buying">Home Buying Consultation</option>
+                                    <option value="package">Package Deal</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Additional Information</label>
+                            <textarea id="message" name="message" rows="5" placeholder="Tell us about your specific needs or questions..."></textarea>
+                        </div>
+                        <div style="text-align: center;">
+                            <button type="submit" class="btn">Submit Request</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- More Page -->
+    <div id="more" class="page">
+        <section class="more-hero">
+            <div class="container">
+                <h1>More from Mamboleo Insights</h1>
+                <p class="subtitle">Explore our blog, success stories, and additional resources</p>
+            </div>
+        </section>
+
+        <section class="featured-guides">
+            <div class="container">
+                <h2 class="section-title">Latest Blog Posts</h2>
+                <p class="section-subtitle">Dive deeper into topics that matter to East Africans with our regularly updated blog.</p>
+                
+                <div class="blog-grid">
+                    <div class="blog-card">
+                        <div class="blog-image" style="background-image: url('https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80');"></div>
+                        <div class="blog-content">
+                            <h3>How I Saved KSH 500,000 in One Year</h3>
+                            <p>A personal finance journey of a young Kenyan professional who transformed their savings habits.</p>
+                            <div class="blog-meta">
+                                <span><i class="far fa-clock"></i> 8 min read</span>
+                                <span><i class="far fa-calendar"></i> April 2, 2024</span>
+                            </div>
+                            <div class="blog-tags">
+                                <span class="blog-tag">Personal Finance</span>
+                                <span class="blog-tag">Savings</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="blog-card">
+                        <div class="blog-image" style="background-image: url('https://images.unsplash.com/photo-1551836026-d5cbcac34f59?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80');"></div>
+                        <div class="blog-content">
+                            <h3>The Future of Remote Work in Kenya</h3>
+                            <p>Exploring how Kenyan companies are adapting to remote work and what it means for employees.</p>
+                            <div class="blog-meta">
+                                <span><i class="far fa-clock"></i> 10 min read</span>
+                                <span><i class="far fa-calendar"></i> March 28, 2024</span>
+                            </div>
+                            <div class="blog-tags">
+                                <span class="blog-tag">Work</span>
+                                <span class="blog-tag">Future</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="blog-card">
+                        <div class="blog-image" style="background-image: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80');"></div>
+                        <div class="blog-content">
+                            <h3>Investing in Kenyan Agriculture</h3>
+                            <p>Opportunities and challenges for urban professionals looking to invest in agriculture.</p>
+                            <div class="blog-meta">
+                                <span><i class="far fa-clock"></i> 12 min read</span>
+                                <span><i class="far fa-calendar"></i> March 22, 2024</span>
+                            </div>
+                            <div class="blog-tags">
+                                <span class="blog-tag">Investment</span>
+                                <span class="blog-tag">Agriculture</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 3rem;">
+                    <a href="#" class="btn">View All Blog Posts</a>
+                </div>
+            </div>
+        </section>
+        
+        <section class="about">
+            <div class="container">
+                <h2 class="section-title">Success Stories</h2>
+                <div class="about-content">
+                    <div class="about-text">
+                        <h3>How Mamboleo Insights Changed Lives</h3>
+                        <p>Read inspiring stories from our community members who have transformed their financial and professional lives using our guides and resources.</p>
+                        
+                        <div class="principles">
+                            <div class="principle">
+                                <i class="fas fa-user-graduate"></i>
+                                <div>
+                                    <h4>Sarah's Career Transformation</h4>
+                                    <p>"After following the career advice on Mamboleo Insights, I negotiated a 40% salary increase and landed my dream job in tech."</p>
+                                </div>
+                            </div>
+                            <div class="principle">
+                                <i class="fas fa-home"></i>
+                                <div>
+                                    <h4>James' Home Ownership Journey</h4>
+                                    <p>"The mortgage guides helped me understand the home buying process, and I just moved into my first apartment in Nairobi."</p>
+                                </div>
+                            </div>
+                            <div class="principle">
+                                <i class="fas fa-chart-line"></i>
+                                <div>
+                                    <h4>Grace's Investment Success</h4>
+                                    <p>"I started with just KSH 5,000 and now have a diversified investment portfolio thanks to the investment guides."</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="about-image">
+                        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Success Stories">
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Contact Page -->
+    <div id="contact" class="page">
+        <section class="page-hero">
+            <div class="container">
+                <h1>Contact Us</h1>
+                <p class="subtitle">Get in touch with our team for questions, partnerships, or media inquiries</p>
+            </div>
+        </section>
+
+        <section class="page-content">
+            <div class="container">
+                <div class="about-content">
+                    <div class="about-text">
+                        <h2>Get In Touch</h2>
+                        <p>We'd love to hear from you. Whether you have questions about our content, want to suggest a topic, or are interested in partnership opportunities, reach out to us using the form or contact details below.</p>
+                        
+                        <div class="principles">
+                            <div class="principle">
+                                <i class="fas fa-envelope"></i>
+                                <div>
+                                    <h4>Email Us</h4>
+                                    <p>derrickwanjala0707@gmail.com</p>
+                                </div>
+                            </div>
+                            <div class="principle">
+                                <i class="fas fa-phone"></i>
+                                <div>
+                                    <h4>Call Us</h4>
+                                    <p>+254 707 911 227</p>
+                                </div>
+                            </div>
+                            <div class="principle">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <div>
+                                    <h4>Visit Us</h4>
+                                    <p>Nairobi, Kenya</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="social-links" style="margin-top: 2rem;">
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-facebook"></i></a>
+                            <a href="#"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                    <div class="about-image">
+                        <div class="contact-form">
+                            <h3>Send us a Message</h3>
+                            <form id="contact-form">
+                                <div class="form-group">
+                                    <label for="contact-name">Full Name</label>
+                                    <input type="text" id="contact-name" name="contact-name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="contact-email">Email Address</label>
+                                    <input type="email" id="contact-email" name="contact-email" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="contact-subject">Subject</label>
+                                    <input type="text" id="contact-subject" name="contact-subject" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="contact-message">Message</label>
+                                    <textarea id="contact-message" name="contact-message" rows="5" required></textarea>
+                                </div>
+                                <div style="text-align: center;">
+                                    <button type="submit" class="btn">Send Message</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Mamboleo Insights</h3>
+                    <p>Demystifying daily life for informed East Africans. Your trusted guide to smarter decisions about money, career, technology, and lifestyle.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a onclick="showPage('home')">Home</a></li>
+                        <li><a onclick="showPage('guides')">Guides</a></li>
+                        <li><a onclick="showPage('resources')">Resources</a></li>
+                        <li><a onclick="showPage('services')">Services</a></li>
+                        <li><a onclick="showPage('more')">More</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <div class="contact-info">
+                        <p><i class="fas fa-envelope"></i> derrickwanjala0707@gmail.com</p>
+                        <p><i class="fas fa-phone"></i> +254 707 911 227</p>
+                        <p><i class="fas fa-user"></i> DW Nyongesa</p>
+                        <p><i class="fas fa-building"></i> Mamboleo E Media</p>
+                        <p><i class="fas fa-map-marker-alt"></i> Nairobi, Kenya</p>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Legal</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">Disclaimer</a></li>
+                        <li><a href="#">Affiliate Disclosure</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2024 Mamboleo Insights. All rights reserved. | Empowering East Africans with knowledge since 2024</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals for detailed content -->
+    <div id="savings-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('savings-modal')">&times;</span>
+            <div class="modal-header">
+                <h2>Best High-Interest Savings Accounts in Kenya 2024</h2>
+                <p><i class="far fa-clock"></i> 15 min read | <i class="far fa-calendar"></i> March 15, 2024</p>
+            </div>
+            <div class="modal-body">
+                <div class="modal-image" style="background-image: url('https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80');"></div>
+                
+                <p>In today's economic climate, finding ways to make your money work for you is more important than ever. With inflation rates fluctuating and the cost of living increasing, a regular savings account might not be enough to preserve, let alone grow, your wealth.</p>
+                
+                <h3>Why High-Interest Savings Accounts Matter</h3>
+                <p>Traditional savings accounts in Kenyan banks typically offer interest rates between 2-4% per annum. However, several financial institutions now provide specialized high-interest savings accounts with rates ranging from 6% to as high as 10% annually. The key is knowing where to look and understanding the terms and conditions.</p>
+                
+                <h3>Top High-Interest Savings Options in Kenya</h3>
+                
+                <h4>1. Digital Banks & FinTech Solutions</h4>
+                <p>Digital-first banks and financial technology companies are leading the way with competitive interest rates:</p>
+                <ul>
+                    <li><strong>ABC Digital Bank:</strong> Offers up to 8.5% p.a. with no minimum balance requirements</li>
+                    <li><strong>XYZ FinTech:</strong> Provides 9.2% p.a. for savings locked for 90 days or more</li>
+                    <li><strong>Mobile Money Investments:</strong> Some mobile-based platforms now offer savings products with returns of 7-10%</li>
+                </ul>
+                
+                <h4>2. SACCOs with Competitive Rates</h4>
+                <p>Many Savings and Credit Cooperative Organizations (SACCOs) offer dividend rates that outperform traditional banks:</p>
+                <ul>
+                    <li><strong>Kenya Union SACCO:</strong> Consistently pays dividends of 12-15% annually to members</li>
+                    <li><strong>Stima SACCO:</strong> Offers both front-end and back-end interest on deposits</li>
+                    <li><strong>Afya SACCO:</strong> Specializes in healthcare professionals with competitive returns</li>
+                </ul>
+                
+                <h4>3. Specialized Bank Products</h4>
+                <p>Some conventional banks have introduced specialized high-yield savings products:</p>
+                <ul>
+                    <li><strong>Equity Bank's EazzySave:</strong> Tiered interest rates up to 7.5% for higher balances</li>
+                    <li><strong>KCB's Goal Save:</strong> Target-based savings with bonus interest upon reaching goals</li>
+                    <li><strong>Co-operative Bank's Jenga Account:</strong> Progressive interest rates based on savings duration</li>
+                </ul>
+                
+                <h3>Key Considerations When Choosing</h3>
+                <p>Before opening any high-interest savings account, consider these factors:</p>
+                <ul>
+                    <li><strong>Accessibility:</strong> How quickly can you access your funds when needed?</li>
+                    <li><strong>Fees:</strong> Are there monthly maintenance fees or transaction charges?</li>
+                    <li><strong>Minimum Balance:</strong> What is the required minimum balance to earn the advertised rate?</li>
+                    <li><strong>Insurance:</strong> Is your deposit protected by the Kenya Deposit Insurance Corporation?</li>
+                    <li><strong>Terms & Conditions:</strong> Read the fine print about rate changes and withdrawal restrictions</li>
+                </ul>
+                
+                <h3>Our Methodology</h3>
+                <p>To compile this guide, we analyzed interest rates, fees, customer service reviews, and accessibility of over 30 financial institutions in Kenya. We also considered feedback from existing customers and regulatory compliance status.</p>
+                
+                <p>Remember, while high-interest savings accounts are a great tool for growing your money, they should be part of a diversified financial strategy that includes investments, emergency funds, and retirement planning.</p>
+                
+                <div style="margin-top: 2rem; padding: 1.5rem; background-color: #f0f7f0; border-radius: 8px;">
+                    <h4>Pro Tip</h4>
+                    <p>Consider splitting your savings across multiple high-interest accounts to maximize returns while maintaining liquidity for different financial goals.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="salary-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('salary-modal')">&times;</span>
+            <div class="modal-header">
+                <h2>Salary Negotiation Guide for Kenyan Professionals</h2>
+                <p><i class="far fa-clock"></i> 12 min read | <i class="far fa-calendar"></i> March 10, 2024</p>
+            </div>
+            <div class="modal-body">
+                <div class="modal-image" style="background-image: url('https://images.unsplash.com/photo-1586281380349-632531db7ed4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80');"></div>
+                
+                <p>Salary negotiation is one of the most critical yet intimidating aspects of career advancement for Kenyan professionals. Many talented individuals leave significant money on the table simply because they don't know how to effectively negotiate their compensation.</p>
+                
+                <h3>Understanding the Kenyan Employment Landscape</h3>
+                <p>Before entering any negotiation, it's essential to understand the context of employment in Kenya:</p>
+                <ul>
+                    <li>The average monthly salary in Kenya varies widely by industry, experience, and location</li>
+                    <li>Nairobi-based professionals typically earn 15-25% more than those in other counties</li>
+                    <li>Multinational companies generally offer higher compensation packages than local firms</li>
+                    <li>The tech and financial services sectors currently offer the most competitive salaries</li>
+                </ul>
+                
+                <h3>Preparation: The Foundation of Successful Negotiation</h3>
+                <p>Thorough preparation is the most crucial step in salary negotiation:</p>
+                
+                <h4>1. Research Market Rates</h4>
+                <p>Use multiple sources to determine your market value:</p>
+                <ul>
+                    <li>Consult salary surveys from recruitment firms like BrighterMonday, Fuzu, and Career Point</li>
+                    <li>Check industry-specific reports from professional associations</li>
+                    <li>Network with peers in similar roles (discreetly)</li>
+                    <li>Consider the company's size, industry, and financial health</li>
+                </ul>
+                
+                <h4>2. Quantify Your Value</h4>
+                <p>Prepare concrete examples of your contributions:</p>
+                <ul>
+                    <li>Revenue you've generated or costs you've saved</li>
+                    <li>Projects you've successfully led or contributed to significantly</li>
+                    <li>Skills, certifications, or experiences that set you apart</li>
+                    <li>Any specialized knowledge relevant to the role</li>
+                </ul>
+                
+                <h4>3. Determine Your Walk-Away Point</h4>
+                <p>Know the minimum acceptable offer before negotiations begin. Consider:</p>
+                <ul>
+                    <li>Your current financial obligations and lifestyle needs</li>
+                    <li>Market rates for your position and experience level</li>
+                    <li>The total compensation package, not just base salary</li>
+                    <li>Long-term growth opportunities</li>
+                </ul>
+                
+                <h3>Negotiation Strategies for Kenyan Professionals</h3>
+                
+                <h4>Timing Your Request</h4>
+                <p>The best times to negotiate salary are:</p>
+                <ul>
+                    <li>During the job offer stage (maximum leverage)</li>
+                    <li>During performance reviews (expected discussion)</li>
+                    <li>After successfully completing a significant project (demonstrated value)</li>
+                    <li>When taking on additional responsibilities (role expansion)</li>
+                </ul>
+                
+                <h4>Effective Communication Techniques</h4>
+                <p>How you communicate your request is as important as the request itself:</p>
+                <ul>
+                    <li>Use confident but respectful language</li>
+                    <li>Frame requests around the value you bring</li>
+                    <li>Practice your talking points beforehand</li>
+                    <li>Maintain positive body language and tone</li>
+                    <li>Listen actively to the employer's perspective</li>
+                </ul>
+                
+                <h4>Sample Negotiation Scripts</h4>
+                <p><strong>For a new job offer:</strong> "Thank you for the offer. I'm very excited about the opportunity to join [Company Name]. Based on my research and the unique skills I would bring to this role, I was hoping for a salary in the range of [X-Y]. Is there flexibility in the offer?"</p>
+                
+                <p><strong>For a raise:</strong> "I appreciate you taking the time to discuss my compensation. Since my last review, I've [list specific accomplishments]. Given these contributions and market rates for this role, I believe an adjustment to [desired salary] would be appropriate."</p>
+                
+                <h3>Beyond Base Salary: Negotiating the Full Package</h3>
+                <p>In Kenya, the total compensation package often includes elements beyond base salary:</p>
+                <ul>
+                    <li><strong>Benefits:</strong> Health insurance, pension contributions, car allowances</li>
+                    <li><strong>Bonuses:</strong> Performance bonuses, annual bonuses, sign-on bonuses</li>
+                    <li><strong>Professional Development:</strong> Training budgets, conference attendance, certification support</li>
+                    <li><strong>Work Flexibility:</strong> Remote work options, flexible hours, additional leave days</li>
+                </ul>
+                
+                <h3>Cultural Considerations in Kenya</h3>
+                <p>Understanding Kenyan workplace culture can enhance your negotiation approach:</p>
+                <ul>
+                    <li>Building rapport before discussing money is often appreciated</li>
+                    <li>Indirect communication is sometimes more effective than direct demands</li>
+                    <li>Respect for hierarchy is important in many Kenyan organizations</li>
+                    <li>Patience is valued—negotiations may take multiple conversations</li>
+                </ul>
+                
+                <div style="margin-top: 2rem; padding: 1.5rem; background-color: #f0f7f0; border-radius: 8px;">
+                    <h4>Key Takeaway</h4>
+                    <p>The most successful negotiators are those who prepare thoroughly, articulate their value clearly, and maintain professional relationships throughout the process. Remember that negotiation is a normal part of business, not a confrontation.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="smartphone-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('smartphone-modal')">&times;</span>
+            <div class="modal-header">
+                <h2>Best Budget Smartphones Under KES 20,000</h2>
+                <p><i class="far fa-clock"></i> 10 min read | <i class="far fa-calendar"></i> March 5, 2024</p>
+            </div>
+            <div class="modal-body">
+                <div class="modal-image" style="background-image: url('https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80');"></div>
+                
+                <p>Finding a quality smartphone that doesn't break the bank has become increasingly possible in Kenya's competitive mobile market. With numerous options available under KES 20,000, consumers no longer have to sacrifice performance for affordability.</p>
+                
+                <h3>Our Testing Methodology</h3>
+                <p>To create this comprehensive guide, we tested 15 different smartphone models priced under KES 20,000. Our evaluation criteria included:</p>
+                <ul>
+                    <li><strong>Performance:</strong> Processor speed, RAM management, and multitasking capability</li>
+                    <li><strong>Display Quality:</strong> Resolution, brightness, color accuracy, and outdoor visibility</li>
+                    <li><strong>Camera Performance:</strong> Photo and video quality in various lighting conditions</li>
+                    <li><strong>Battery Life:</strong> Screen-on time and standby performance with typical usage</li>
+                    <li><strong>Build Quality:</strong> Materials, durability, and ergonomics</li>
+                    <li><strong>Software Experience:</strong> User interface, bloatware, and update policy</li>
+                    <li><strong>Value for Money:</strong> Features offered relative to price point</li>
+                </ul>
+                
+                <h3>Top Picks Under KES 20,000</h3>
+                
+                <h4>1. Tecno Spark 10 Pro - KES 18,999</h4>
+                <p><strong>Key Features:</strong></p>
+                <ul>
+                    <li>6.8-inch FHD+ display with 90Hz refresh rate</li>
+                    <li>MediaTek Helio G88 processor</li>
+                    <li>8GB RAM + 128GB storage (expandable)</li>
+                    <li>50MP main camera + 32MP selfie camera</li>
+                    <li>5000mAh battery with 18W fast charging</li>
+                </ul>
+                <p><strong>Our Assessment:</strong> The Spark 10 Pro offers exceptional value with its large, smooth display and capable camera system. Performance is solid for everyday tasks and light gaming. The 5000mAh battery comfortably lasts a full day with moderate to heavy use.</p>
+                
+                <h4>2. Infinix Hot 30i - KES 15,499</h4>
+                <p><strong>Key Features:</strong></p>
+                <ul>
+                    <li>6.6-inch HD+ display</li>
+                    <li>Unisoc T606 processor</li>
+                    <li>4GB RAM + 128GB storage (expandable)</li>
+                    <li>50MP dual camera system</li>
+                    <li>5000mAh battery with 10W charging</li>
+                </ul>
+                <p><strong>Our Assessment:</strong> The Hot 30i delivers reliable performance at an attractive price point. While the display isn't as sharp as more expensive models, it's perfectly adequate for media consumption. The 50MP camera captures decent photos in good lighting conditions.</p>
+                
+                <h4>3. Samsung Galaxy A04s - KES 16,999</h4>
+                <p><strong>Key Features:</strong></p>
+                <ul>
+                    <li>6.5-inch HD+ display with 90Hz refresh rate</li>
+                    <li>Exynos 850 processor</li>
+                    <li>4GB RAM + 64GB storage (expandable)</li>
+                    <li>50MP triple camera system</li>
+                    <li>5000mAh battery with 15W charging</li>
+                </ul>
+                <p><strong>Our Assessment:</strong> Samsung's entry in this category benefits from the brand's reliable software support and clean interface. The 90Hz display is a welcome feature at this price, making navigation feel smoother. Camera performance is consistent, though low-light photography could be better.</p>
+                
+                <h4>4. Nokia G22 - KES 17,499</h4>
+                <p><strong>Key Features:</strong></p>
+                <ul>
+                    <li>6.5-inch HD+ display</li>
+                    <li>Unisoc T606 processor</li>
+                    <li>4GB RAM + 64GB storage (expandable)</li>
+                    <li>50MP triple camera system</li>
+                    <li>5050mAh battery with 20W charging</li>
+                    <li>Repairability focus with iFixit partnership</li>
+                </ul>
+                <p><strong>Our Assessment:</strong> The Nokia G22 stands out for its sustainability focus and repairability. Performance is comparable to other devices in this range, but the clean Android experience and promised software updates are significant advantages for those who value long-term usability.</p>
+                
+                <h3>Key Considerations for Budget Smartphone Buyers in Kenya</h3>
+                
+                <h4>Network Compatibility</h4>
+                <p>Ensure the phone supports the 4G bands used by Kenyan carriers, particularly for Safaricom, Airtel, and Telkom Kenya. Some imported models may not have full compatibility.</p>
+                
+                <h4>After-Sales Support</h4>
+                <p>Consider brands with established service centers in Kenya. Tecno, Infinix, Samsung, and Nokia all have reliable service networks across the country.</p>
+                
+                <h4>Software Updates</h4>
+                <p>Android security updates are crucial for protecting your device. Samsung and Nokia typically offer the most consistent update schedules in this price range.</p>
+                
+                <h4>Battery Life</h4>
+                <p>With Kenya's occasional power challenges, a phone with strong battery performance is essential. All our top picks feature batteries of 5000mAh or larger.</p>
+                
+                <h3>Where to Buy</h3>
+                <p>In Kenya, you can purchase these smartphones from:</p>
+                <ul>
+                    <li><strong>Official brand stores:</strong> Guaranteed genuine products with warranty</li>
+                    <li><strong>Authorized retailers:</strong> Such as Safaricom shops, Phone Place Kenya, etc.</li>
+                    <li><strong>Reputable online platforms:</strong> Including Jumia, Kilimall, and Masoko</li>
+                </ul>
+                <p>Avoid unauthorized dealers who may sell counterfeit or refurbished devices as new.</p>
+                
+                <div style="margin-top: 2rem; padding: 1.5rem; background-color: #f0f7f0; border-radius: 8px;">
+                    <h4>Our Verdict</h4>
+                    <p>The KES 15,000-20,000 price segment offers remarkable value in today's Kenyan smartphone market. The Tecno Spark 10 Pro emerges as our top recommendation for its balanced combination of display quality, performance, and camera capabilities. However, all the phones in our list represent solid choices depending on your specific priorities.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Page Management
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show the selected page
+            document.getElementById(pageId).classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+            
+            // Close mobile menu if open
+            document.querySelector('.nav-links').classList.remove('active');
+        }
+
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+
+        // Tab functionality
+        document.querySelectorAll('.tab-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const tabId = button.getAttribute('data-tab');
+                
+                // Remove active class from all buttons and content
+                document.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Add active class to clicked button and corresponding content
+                button.classList.add('active');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        // Portal Tab functionality
+        document.querySelectorAll('.portal-tab-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const portalId = button.getAttribute('data-portal');
+                
+                // Remove active class from all buttons and content
+                document.querySelectorAll('.portal-tab-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                document.querySelectorAll('.portal-tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Add active class to clicked button and corresponding content
+                button.classList.add('active');
+                document.getElementById(portalId + '-portal').classList.add('active');
+            });
+        });
+
+        // Newsletter form submission
+        document.querySelector('.newsletter-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('.newsletter-input').value;
+            alert(`Thank you for subscribing with ${email}! You'll receive the Mamboleo Brief soon.`);
+            this.querySelector('.newsletter-input').value = '';
+        });
+
+        // Consultation form submission
+        document.getElementById('consultation-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your consultation request! We will contact you within 24 hours to schedule your session.');
+            this.reset();
+        });
+
+        // Contact form submission
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your message! We will respond to your inquiry within 48 hours.');
+            this.reset();
+        });
+
+        // Modal functionality
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+            document.body.style.overflow = 'hidden'; // Prevent scrolling
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            document.body.style.overflow = 'auto'; // Re-enable scrolling
+        }
+
+        // Close modal when clicking outside content
+        window.addEventListener('click', function(event) {
+            document.querySelectorAll('.modal').forEach(modal => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        });
+
+        // Add loading animation for guide cards
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.guide-card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+            });
+        });
+    </script>
+</body>
+</html>
